@@ -1,33 +1,30 @@
 <?xml version="1.0"?>
-<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
-<package format="3">
-  <name>crane_x7_simple_examples</name>
-  <version>0.0.1</version>
-  <description>programs to control CRANE-X7 package</description>
-  <maintainer email="keitaro.nkmr0823@gmail.com">Keitaro Nakamura</maintainer>
-  <license>Apache License 2.0</license>
+<package format="2">
+  <name>robdesstamp_2022</name>
+  <version>0.0.0</version>
+  <description>robdesstamp_2022 package</description>
 
-  <author email="keitaro.nkmr0823@gmail.com">Keitaro Nakamura</author>
+  <maintainer email="msaku3909@gmail.com">Yusaku Matsuyama</maintainer>
+  <maintainer email="hase.hiro777@ezweb.ne.jp">Hiroki Hasegawa</maintainer>
 
-  <buildtool_depend>ament_cmake</buildtool_depend>
+  <license>NON-COMMERCIAL LICENSE AGREEMENT</license>
 
-  <depend>angles</depend>
-  <depend>crane_x7_control</depend>
-  <depend>crane_x7_description</depend>
-  <depend>crane_x7_moveit_config</depend>
-  <depend>cv_bridge</depend>
-  <depend>geometry_msgs</depend>
-  <depend>image_geometry</depend>
-  <depend>libopencv-dev</depend>
-  <depend>moveit_ros_planning_interface</depend>
-  <depend>rclcpp</depend>
-  <depend>realsense2_camera</depend>
-  <depend>tf2_geometry_msgs</depend>
+  <author email="tiryoh@gmail.com">Daisuke Sato</author>
+  <author email="nomura@rt-net.jp">Hiroyuki Nomura</author>
 
-  <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_lint_common</test_depend>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>geometry_msgs</build_export_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>rospy</exec_depend>
 
-  <export>
-    <build_type>ament_cmake</build_type>
-  </export>
 </package>
