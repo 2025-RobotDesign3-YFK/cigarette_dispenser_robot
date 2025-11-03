@@ -53,8 +53,8 @@ def main():
                   cx4,cy4 = landmark_x, landmark_y
               if index == 8:
                   cx8,cy8 = landmark_x, landmark_y
-              if index == 9:
-                  cx9,cy9 = landmark_x, landmark_y
+             # if index == 9:
+              #    cx9,cy9 = landmark_x, landmark_y
               if index == 12:
                   cx12,cy12 = landmark_x, landmark_y
               if index == 16:
@@ -63,47 +63,44 @@ def main():
                   cx20,cy20 = landmark_x, landmark_y
 
           #取得した座標より各指の中間点を表示
-          gap1x,gap1y = (cx0+cx9)/2, (cy0+cy9)/2
-          gap1x = int(gap1x)
-          gap1y = int(gap1y)
-          cv2.circle(image, (gap1x,gap1y), 5, (0, 255, 0), 2)
-          gap1x,gap1y = gap1x-image_width/2,-(gap1y-image_height/2)
+          #gap1x,gap1y = (cx0+cx9)/2, (cy0+cy9)/2
+          #gap1x = int(gap1x)
+          #gap1y = int(gap1y)
+          #cv2.circle(image, (gap1x,gap1y), 5, (0, 255, 0), 2)
+          #gap1x,gap1y = gap1x-image_width/2,-(gap1y-image_height/2)
 
-          """
-          #取得した座標より各指の距離を表示
-          gap1x,gap1y = cx0+cx4, cy0+cy4
-          gap2x,gap2y = cx0+cx8, cy0+cy8
-          gap3x,gap3y = cx0+cx12, cy0+cy12
-          gap4x,gap4y = cx0+cx16, cy0+cy16
-          gap5x,gap5y = cx0+cx20, cy0+cy20
-
-          gap1x = int(gap1x)
-          gap1y = int(gap1y)
-
-          gap2x = int(gap2x)
-          gap2y = int(gap2y)
-
-          gap3x = int(gap3x)
-          gap3y = int(gap3y)
-
-          gap4x = int(gap4x)
-          gap4y = int(gap4y)
-
-          gap5x = int(gap5x)
-          gap5y = int(gap5y)
-
-          cv2.circle(image, (gap1x,gap1y), 5, (0, 255, 0), 2)
-          cv2.circle(image, (gap2x,gap2y), 5, (0, 255, 0), 2)
-          cv2.circle(image, (gap3x,gap3y), 5, (0, 255, 0), 2)
-          cv2.circle(image, (gap4x,gap4y), 5, (0, 255, 0), 2)
-          cv2.circle(image, (gap5x,gap5y), 5, (0, 255, 0), 2)
           
+          #取得した座標より各指の距離を表示
+          gap1x,gap1y = cx4, cy4
+          gap2x,gap2y = cx8, cy8-cy0
+          gap3x,gap3y = cx12, cy12-cy0
+          gap4x,gap4y = cx16, cy16-cy0
+          gap5x,gap5y = cx20, cy20-cy0
+
+          finger_thump  = int(math.sqrt((cx4-cx0)**2))
+          finger_index  = int(math.sqrt((cx8-cx0)**2  + (cy8-cy0)**2) )
+          finger_middle = int(math.sqrt((cx12-cx0)**2 + (cy12-cy0)**2))
+          finger_ring   = int(math.sqrt((cx16-cx0)**2 + (cy16-cy0)**2))
+          finger_little = int(math.sqrt((cx20-cx0)**2 + (cy20-cy0)**2))
+
+          threshold = 200#閾値
+          finger_open = [0, 0, 0, 0, 0]
+          fingers = [finger_thump, finger_index, finger_middle, finger_ring, finger_little]
+
+          
+          #for i in fingers:
+          if finger_index > threshold:
+                 finger_open[1] = "open"
+          else:
+                 finger_open[1] = "close"
+          
+
           gap1x,gap1y = gap1x-image_width/2,-(gap1y-image_height/2)
           gap2x,gap2y = gap2x-image_width/2,-(gap2y-image_height/2)
           gap3x,gap3y = gap3x-image_width/2,-(gap3y-image_height/2)
           gap4x,gap4y = gap4x-image_width/2,-(gap4y-image_height/2)
           gap5x,gap5y = gap5x-image_width/2,-(gap5y-image_height/2)
-          """
+
           """
           array_points.points = []
 
@@ -139,12 +136,12 @@ def main():
           """
           
           #カメラ画像に値を表示させたい場合は
-          cv2.putText(image,"gap1x:"+str(gap1x)+"gap1y:"+str(gap1y),(10,30),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
-         # cv2.putText(image,"gap2x:"+str(gap2x)+"gap1y:"+str(gap2y),(10,60),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
-         # cv2.putText(image,"gap3x:"+str(gap3x)+"gap1y:"+str(gap3y),(10,90),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
-         # cv2.putText(image,"gap4x:"+str(gap4x)+"gap1y:"+str(gap4y),(10,120),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
-         # cv2.putText(image,"gap5x:"+str(gap5x)+"gap1y:"+str(gap5y),(10,150),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
-
+          cv2.putText(image,"finger_thump:"+str(finger_thump),(10,30),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+          cv2.putText(image,"finger_index:"+str(finger_index)+":"+str(finger_open[1]),(10,60),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+          cv2.putText(image,"finger_middle:"+str(finger_middle),(10,90),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+          cv2.putText(image,"finger_ring:"+str(finger_ring),(10,120),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+          cv2.putText(image,"finger_little:"+str(finger_little),(10,150),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+          cv2.putText(image,"threshold:"+str(threshold),(10,180),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
 
           mp_drawing.draw_landmarks(
               image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
