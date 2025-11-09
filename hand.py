@@ -70,38 +70,35 @@ def main():
           #gap1x,gap1y = gap1x-image_width/2,-(gap1y-image_height/2)
 
           
-          #取得した座標より各指の距離を表示
-          gap1x,gap1y = cx4, cy4
-          gap2x,gap2y = cx8, cy8-cy0
-          gap3x,gap3y = cx12, cy12-cy0
-          gap4x,gap4y = cx16, cy16-cy0
-          gap5x,gap5y = cx20, cy20-cy0
-
+          #取得した座標より各指の手首との距離を計算
           finger_thump  = int(math.sqrt((cx4-cx0)**2))
           finger_index  = int(math.sqrt((cx8-cx0)**2  + (cy8-cy0)**2) )
           finger_middle = int(math.sqrt((cx12-cx0)**2 + (cy12-cy0)**2))
           finger_ring   = int(math.sqrt((cx16-cx0)**2 + (cy16-cy0)**2))
           finger_little = int(math.sqrt((cx20-cx0)**2 + (cy20-cy0)**2))
 
-          threshold = 200#閾値
-          finger_open = [0, 0, 0, 0, 0]
+          threshold = [100,200,200,200,200]
+          finger_open = ["close"] * 5
           fingers = [finger_thump, finger_index, finger_middle, finger_ring, finger_little]
+          finger_num = None
 
+          for i,fing,thres in zip(range(5),fingers,threshold):
+            if fing > thres:
+                 finger_open[i] = "open"
+            else:
+                 finger_open[i] = "close"
+          if finger_open[1] == "open" and all(f == "close" for f in [finger_open[0], finger_open[2], finger_open[3], finger_open[4]]):
+                finger_num = 1
           
-          #for i in fingers:
-          if finger_index > threshold:
-                 finger_open[1] = "open"
-          else:
-                 finger_open[1] = "close"
           
-
+          """
           gap1x,gap1y = gap1x-image_width/2,-(gap1y-image_height/2)
           gap2x,gap2y = gap2x-image_width/2,-(gap2y-image_height/2)
           gap3x,gap3y = gap3x-image_width/2,-(gap3y-image_height/2)
           gap4x,gap4y = gap4x-image_width/2,-(gap4y-image_height/2)
           gap5x,gap5y = gap5x-image_width/2,-(gap5y-image_height/2)
 
-          """
+
           array_points.points = []
 
           point_1 = Point()
@@ -136,12 +133,13 @@ def main():
           """
           
           #カメラ画像に値を表示させたい場合は
-          cv2.putText(image,"finger_thump:"+str(finger_thump),(10,30),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+          cv2.putText(image,"finger_thump:"+str(finger_thump)+":"+str(finger_open[0]),(10,30),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
           cv2.putText(image,"finger_index:"+str(finger_index)+":"+str(finger_open[1]),(10,60),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
-          cv2.putText(image,"finger_middle:"+str(finger_middle),(10,90),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
-          cv2.putText(image,"finger_ring:"+str(finger_ring),(10,120),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
-          cv2.putText(image,"finger_little:"+str(finger_little),(10,150),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
-          cv2.putText(image,"threshold:"+str(threshold),(10,180),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+          cv2.putText(image,"finger_middle:"+str(finger_middle)+":"+str(finger_open[2]),(10,90),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+          cv2.putText(image,"finger_ring:"+str(finger_ring)+":"+str(finger_open[3]),(10,120),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+          cv2.putText(image,"finger_little:"+str(finger_little)+":"+str(finger_open[4]),(10,150),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+          cv2.putText(image,"threshold:"+str(threshold),(10,180),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)#閾値
+          cv2.putText(image,"number:"+str(finger_num),(10,210),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2, cv2.LINE_AA)#指数字
 
           mp_drawing.draw_landmarks(
               image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
@@ -154,5 +152,6 @@ def main():
 if __name__ == '__main__':
     try:
       main()
-    except:# rospy.ROSInterruptException: 
+    except Exception as e:# rospy.ROSInterruptException: 
+      print("Error:", e)
       pass  
