@@ -37,7 +37,7 @@ int main(int argc, char ** argv)
   auto gripper_joint_values = move_group_gripper.getCurrentJointValues();
 
   // SRDFに定義されている"home"の姿勢にする
-  move_group_arm.setNamedTarget("home");//moveitのconfig内のsrdfファイルにて定義される
+  move_group_arm.setNamedTarget("home");
   move_group_arm.move();
 
   //グリッパーを開く
@@ -50,14 +50,14 @@ int main(int argc, char ** argv)
   constraints.name = "arm_constraints";
 
   moveit_msgs::msg::JointConstraint joint_constraint;
-  joint_constraint.joint_name = "crane_x7_lower_arm_fixed_part_joint";//アーム下側の可動範囲を制限
+  joint_constraint.joint_name = "crane_x7_lower_arm_fixed_part_joint";
   joint_constraint.position = 0.0;
   joint_constraint.tolerance_above = angles::from_degrees(45);
   joint_constraint.tolerance_below = angles::from_degrees(45);
   joint_constraint.weight = 1.0;
   constraints.joint_constraints.push_back(joint_constraint);
 
-  joint_constraint.joint_name = "crane_x7_upper_arm_revolute_part_twist_joint";//アーム上側の可動範囲を制限
+  joint_constraint.joint_name = "crane_x7_upper_arm_revolute_part_twist_joint";
   joint_constraint.position = 0.0;
   joint_constraint.tolerance_above = angles::from_degrees(45);
   joint_constraint.tolerance_below = angles::from_degrees(45);
@@ -70,41 +70,49 @@ int main(int argc, char ** argv)
   geometry_msgs::msg::Pose target_pose;
   tf2::Quaternion q;
   
-  target_pose.position.x = 0.25;
-  target_pose.position.y = -0.15;
-  target_pose.position.z = 0.1;//x,y,zを指定(位置)
-  q.setRPY(angles::from_degrees(90), angles::from_degrees(0), angles::from_degrees(90));//ロール,ピッチ,ヨーを指定(姿勢)
+  target_pose.position.x = 0.29;
+  target_pose.position.y = 0.0;
+  target_pose.position.z = 0.18;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);//指定要素をセット
-  move_group_arm.move();//動かす
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
 
-  target_pose.position.x = 0.3;
-  target_pose.position.y = -0.15;
+  target_pose.position.x = 0.29;
+  target_pose.position.y = 0.0;
   target_pose.position.z = 0.1;
-  q.setRPY(angles::from_degrees(90), angles::from_degrees(0), angles::from_degrees(90));
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
   //掴む
-  gripper_joint_values[0] = angles::from_degrees(15);//開くときと同じ
+  gripper_joint_values[0] = angles::from_degrees(5);
   move_group_gripper.setJointValueTarget(gripper_joint_values);
   move_group_gripper.move();
   
   // 持ち上げる
-  target_pose.position.x = 0.3;
+  target_pose.position.x = 0.29;
   target_pose.position.y = 0.0; 
   target_pose.position.z = 0.3; 
-  q.setRPY(angles::from_degrees(90), angles::from_degrees(0), angles::from_degrees(90));
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
   //物体を掴んだまま移動する
-  target_pose.position.x = 0.3;
-  target_pose.position.y = 0.15;
-  target_pose.position.z = 0.1;
-  q.setRPY(angles::from_degrees(90), angles::from_degrees(0), angles::from_degrees(90));
+  target_pose.position.x = 0.0;
+  target_pose.position.y = 0.3;
+  target_pose.position.z = 0.3;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+  
+  target_pose.position.x = 0.0;
+  target_pose.position.y = 0.3;
+  target_pose.position.z = 0.12;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
