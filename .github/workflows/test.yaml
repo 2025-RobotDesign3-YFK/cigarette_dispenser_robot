@@ -1,5 +1,6 @@
 name: build-test
-on: push
+
+on:
   push:
     branches:
       - main
@@ -14,9 +15,6 @@ on: push
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
     container: osrf/ros:humble-desktop
     strategy:
       matrix:
@@ -29,7 +27,7 @@ jobs:
 
       - name: Apt update
         run: |
-          sudo apt update -y
+          apt update -y
 
       - name: Build test
         run: |
