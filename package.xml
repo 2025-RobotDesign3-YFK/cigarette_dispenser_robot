@@ -3,9 +3,9 @@
 <package format="3">
   <name>cigarette_dispenser_robot</name>
   <version>0.0.0</version>
-  <description>TODO</description>
+  <description>programs to control CRANE-X7 package</description>
   <maintainer email="s24c1130pf@s.chibakoudai.jp">Shogo Yamashita</maintainer>
-  <license>TODO</license>
+  <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   <buildtool_depend>ament_cmake_python</buildtool_depend>

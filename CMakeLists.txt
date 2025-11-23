@@ -33,7 +33,7 @@ ament_python_install_package(${PROJECT_NAME})
 
 # Install Python executables in the ros2_ws/install/cpp_py_pkg/lib/cpp_py_pkg/ folder
 install(PROGRAMS
-  scripts/publisher_py.py
+  scripts/detection.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
