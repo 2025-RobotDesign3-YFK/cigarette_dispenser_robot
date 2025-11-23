@@ -12,8 +12,20 @@ find_package(rclpy REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
+find_package(cv_bridge REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(image_geometry REQUIRED)
+find_package(moveit_ros_planning_interface REQUIRED)
+find_package(OpenCV REQUIRED COMPONENTS core)
+find_package(tf2_geometry_msgs REQUIRED)
+
 # Include Cpp “include” directory
 include_directories(include)
+
+
+# src下のソースコードはTARGETSで
+# scripts下のソースコードはPROGRAMSで
+# launch下のlaunchファイルはDIRECTORYで
 
 # Create Cpp executable and link with dependencies
 ##add_executable(cpp_executable src/cpp_node.cpp)
@@ -28,6 +40,21 @@ install(TARGETS#cpp_executable
   DESTINATION lib/${PROJECT_NAME}
 )
 
+add_executable(motion src/motion.cpp)
+ament_target_dependencies(motion
+    cv_bridge
+    geometry_msgs
+    image_geometry
+    moveit_ros_planning_interface
+    OpenCV
+    rclcpp
+    tf2_geometry_msgs
+)
+install(TARGETS
+  motion 
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 # Install Python modules
 ament_python_install_package(${PROJECT_NAME})
 
@@ -35,6 +62,11 @@ ament_python_install_package(${PROJECT_NAME})
 install(PROGRAMS
   scripts/detection.py
   DESTINATION lib/${PROJECT_NAME}
+)
+
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
 )
 
 if(BUILD_TESTING)
