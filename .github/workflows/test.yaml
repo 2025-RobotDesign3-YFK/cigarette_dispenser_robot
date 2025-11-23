@@ -1,5 +1,5 @@
 name: build-test
-on:
+on: push
   push:
     branches:
       - main
