@@ -50,9 +50,19 @@ def generate_launch_description():
         description=('Set true when using the gazebo simulator.')
     )
     #パッケージ名の変更、実行するコードの変更は以下を編集してください
-    example_node = Node(
+    motion_node = Node(
                         package='cigarette_dispenser_robot',
                         executable='motion',
+                        name='motion_node',
+                        output='screen',
+                        parameters=[{'robot_description': description_loader.load()},
+                                    robot_description_semantic,
+                                    kinematics_yaml])
+
+    detection_node = Node(
+                        package='cigarette_dispenser_robot',
+                        executable='detection.py',
+                        name='detection_node',
                         output='screen',
                         parameters=[{'robot_description': description_loader.load()},
                                     robot_description_semantic,
@@ -61,5 +71,6 @@ def generate_launch_description():
     return LaunchDescription([
         declare_use_sim_time,
         SetParameter(name='use_sim_time', value=LaunchConfiguration('use_sim_time')),
-        example_node
+        motion_node,
+        detection_node
     ])
