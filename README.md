@@ -26,11 +26,9 @@ cd cigarette_dispenser_robot
 ### 実機(CRANE_X7)で実行する場合 
 
 ## ライセンス
-(C) 2025 Hiroto Fujitake, Syougo Yamasita, Reoto Koya
-
-このパッケージは、CIT-Autonomous-Robot-Labの公開する[パッケージ](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples)の[src](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples/blob/main/src)のpick_and_move.cppの改変によって作成されました。
-
-このパッケージはApache License, Version 2.0に基づき公開されています.  
+- (C) 2025 Hiroto Fujitake, Syougo Yamasita, Reoto Koya
+- このパッケージは、CIT-Autonomous-Robot-Labの公開する[パッケージ](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples)の[src](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples/blob/main/src)のpick_and_move.cppの改変によって作成されました。
+- このパッケージはApache License, Version 2.0に基づき公開されています.  
 ライセンスの全文は[LICENSE](./LICENSE)から確認できます.  
 
 
