@@ -12,14 +12,15 @@ CRANE-X7とmediaPipeを連携させてシガレットをピッキングするROS
 
 ### リポジトリのクローン
 
-'''bash
+```bash
 git clone https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot.git
 cd cigarette_dispenser_robot
+```
 
 ### Gazeboで実行する場合
 
-- **terminal 1:** 'ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py'
-- **terminal 2:** 'ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py use_sim_time:='true''
+- **terminal 1:** `ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py`
+- **terminal 2:** `ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py use_sim_time:='true'`
 
 
 ### 実機(CRANE_X7)で実行する場合 
