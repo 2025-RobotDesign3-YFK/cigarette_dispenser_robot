@@ -8,6 +8,8 @@ CRANE-X7とmediaPipeを連携させてシガレットをピッキングするROS
 
 ## デモ
 
+<video src="demo_hand_tracking.mp4" controls width="100%"></video>
+
 ## 使用方法
 
 ### リポジトリのクローン
@@ -21,9 +23,6 @@ cd cigarette_dispenser_robot
 
 - **terminal 1:** `ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py`
 - **terminal 2:** `ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py use_sim_time:='true'`
-
-
-### 実機(CRANE_X7)で実行する場合 
 
 ## ライセンス
 - (C) 2025 Hiroto Fujitake, Syougo Yamasita, Reoto Koya
