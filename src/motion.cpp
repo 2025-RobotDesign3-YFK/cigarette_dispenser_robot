@@ -122,6 +122,15 @@ int main(int argc, char ** argv)
   move_group_gripper.setJointValueTarget(gripper_joint_values);
   move_group_gripper.move();
 
+  //離した後の姿勢
+  target_pose.position.x = 0.0;
+  target_pose.position.y = 0.3;
+  target_pose.position.z = 0.3;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
   // 可動範囲の制限を解除
   move_group_arm.clearPathConstraints();
 
