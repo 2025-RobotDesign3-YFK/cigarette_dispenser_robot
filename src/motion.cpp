@@ -8,14 +8,50 @@
 #include "geometry_msgs/msg/pose.hpp"
 #include "geometry_msgs/msg/quaternion.hpp"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
+#include "std_msgs/msg/int16.hpp"//int16
+
 
 using MoveGroupInterface = moveit::planning_interface::MoveGroupInterface;
 
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("pick_and_move");
 
-int main(int argc, char ** argv)
+
+////subscliber
+class MinimalSubscriber : public rclcpp::Node
 {
-  rclcpp::init(argc, argv);
+public:
+int value = 0;//
+  MinimalSubscriber()
+  : Node("minimal_subscriber")
+  {
+    auto topic_callback =
+      [this](std_msgs::msg::Int16::UniquePtr msg) -> void {
+        //RCLCPP_INFO(this->get_logger(), "subscribed: '%d'", msg->data);
+        this->value = msg->data;//
+      };
+    subscription_ =
+      this->create_subscription<std_msgs::msg::Int16>("finger_num", 10, topic_callback);
+  }
+
+private:
+  rclcpp::Subscription<std_msgs::msg::Int16>::SharedPtr subscription_;
+};
+////
+
+
+int main(int argc, char ** argv){
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<MinimalSubscriber>();//
+
+rclcpp::WallRate loop(0.5);
+
+ while(rclcpp::ok() && node->value==0){
+  rclcpp::spin_some(node);
+  RCLCPP_INFO(node->get_logger(), "subscribed: '%d'", node->value);
+  loop.sleep();
+  }
+
+if(node->value){
   rclcpp::NodeOptions node_options;
   node_options.automatically_declare_parameters_from_overrides(true);
   auto move_group_arm_node = rclcpp::Node::make_shared("move_group_arm_node", node_options);
@@ -137,6 +173,7 @@ int main(int argc, char ** argv)
   //homeの姿勢に戻る
   move_group_arm.setNamedTarget("home");
   move_group_arm.move();
+}//if
 
   rclcpp::shutdown();
   return 0;

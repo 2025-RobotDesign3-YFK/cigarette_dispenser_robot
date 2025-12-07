@@ -49,6 +49,7 @@ ament_target_dependencies(motion
     OpenCV
     rclcpp
     tf2_geometry_msgs
+    std_msgs
 )
 install(TARGETS
   motion 
