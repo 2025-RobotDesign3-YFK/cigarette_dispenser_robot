@@ -32,7 +32,7 @@ def main(args=None):
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5) as hands:
 
-    
+
     while True: #not rospy.is_shutdown():
       finger_num = 0
 
@@ -77,7 +77,7 @@ def main(args=None):
           #cv2.circle(image, (gap1x,gap1y), 5, (0, 255, 0), 2)
           #gap1x,gap1y = gap1x-image_width/2,-(gap1y-image_height/2)
 
-          
+
           #取得した座標より各指の手首との距離を計算
           finger_thump  = int(math.sqrt((cx4-cx0)**2))
           finger_index  = int(math.sqrt((cx8-cx0)**2  + (cy8-cy0)**2) )
@@ -96,8 +96,21 @@ def main(args=None):
                  finger_open[i] = "close"
           if finger_open[1] == "open" and all(f == "close" for f in [finger_open[0], finger_open[2], finger_open[3], finger_open[4]]):
                 finger_num = 1
-          
-          
+
+          elif finger_open[1] == "open" and finger_open[2] == "open" and all(f == "close" for f in [finger_open[0], finger_open[3], finger_open[4]]):
+                finger_num = 2
+
+          elif finger_open[1] == "open" and finger_open[2] == "open" and finger_open[3] == "open" and all(f == "close" for f in [finger_open[0], finger_open[4]]):
+                finger_num = 3
+
+          elif finger_open[1] == "open" and finger_open[2] == "open" and finger_open[3] == "open" and finger_open[4] == "open" and all(f == "close" for f in [finger_open[0]]):
+                finger_num = 4
+
+          elif all(f == "open" for f in finger_open):
+                finger_num = 5
+
+
+
           #カメラ画像に値を表示させたい場合は
           cv2.putText(image,"finger_thump:"+str(finger_thump)+":"+str(finger_open[0]),(10,30),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
           cv2.putText(image,"finger_index:"+str(finger_index)+":"+str(finger_open[1]),(10,60),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
@@ -116,13 +129,13 @@ def main(args=None):
       msg.data = int(finger_num)
       node.pub.publish(msg)
       #node.get_logger().info(f"Publish: {msg.data}")
-      
+
       if cv2.waitKey(5) & 0xFF == 27:
         break
-    
+
 if __name__ == '__main__':
     try:
       main()
     except Exception as e:# rospy.ROSInterruptException: 
       print("Error:", e)
-      pass  
+      pass

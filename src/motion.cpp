@@ -37,7 +37,19 @@ private:
   rclcpp::Subscription<std_msgs::msg::Int16>::SharedPtr subscription_;
 };
 ////
+/*
+void gripper_setting(){
+  //アームとグリッパーの速度と加速度を設定
+  MoveGroupInterface move_group_arm(move_group_arm_node, "arm");
+  move_group_arm.setMaxVelocityScalingFactor(1.0);  // Set 0.0 ~ 1.0
+  move_group_arm.setMaxAccelerationScalingFactor(1.0);  // Set 0.0 ~ 1.0
 
+  MoveGroupInterface move_group_gripper(move_group_gripper_node, "gripper");
+  move_group_gripper.setMaxVelocityScalingFactor(1.0);  // Set 0.0 ~ 1.0
+  move_group_gripper.setMaxAccelerationScalingFactor(1.0);  // Set 0.0 ~ 1.0
+  auto gripper_joint_values = move_group_gripper.getCurrentJointValues();
+}
+*/
 
 int main(int argc, char ** argv){
     rclcpp::init(argc, argv);
@@ -51,11 +63,15 @@ rclcpp::WallRate loop(0.5);
   loop.sleep();
   }
 
-if(node->value){
+if(node->value != 0){
   rclcpp::NodeOptions node_options;
   node_options.automatically_declare_parameters_from_overrides(true);
   auto move_group_arm_node = rclcpp::Node::make_shared("move_group_arm_node", node_options);
   auto move_group_gripper_node = rclcpp::Node::make_shared("move_group_gripper_node", node_options);
+
+  geometry_msgs::msg::Pose target_pose;
+  tf2::Quaternion q;
+
   // For current state monitor
   rclcpp::executors::SingleThreadedExecutor executor;
   executor.add_node(move_group_arm_node);
@@ -71,6 +87,7 @@ if(node->value){
   move_group_gripper.setMaxVelocityScalingFactor(1.0);  // Set 0.0 ~ 1.0
   move_group_gripper.setMaxAccelerationScalingFactor(1.0);  // Set 0.0 ~ 1.0
   auto gripper_joint_values = move_group_gripper.getCurrentJointValues();
+
 
   // SRDFに定義されている"home"の姿勢にする
   move_group_arm.setNamedTarget("home");
@@ -101,11 +118,13 @@ if(node->value){
   constraints.joint_constraints.push_back(joint_constraint);
 
   move_group_arm.setPathConstraints(constraints);
+switch(node->value){
 
+case 1:{
   //アームの手先を物体へ
-  geometry_msgs::msg::Pose target_pose;
-  tf2::Quaternion q;
-  
+  //geometry_msgs::msg::Pose target_pose;
+  //tf2::Quaternion q;
+
   target_pose.position.x = 0.29;
   target_pose.position.y = 0.0;
   target_pose.position.z = 0.18;
@@ -122,15 +141,110 @@ if(node->value){
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
+  break;
+}
+
+case 2:{
+  //アームの手先を物体へ
+
+  target_pose.position.x = 0.20;
+  target_pose.position.y = 0.0;
+  target_pose.position.z = 0.18;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
+  target_pose.position.x = 0.20;
+  target_pose.position.y = 0.0;
+  target_pose.position.z = 0.1;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
+  break;
+}
+
+case 3:{
+  //アームの手先を物体へ
+
+  target_pose.position.x = 0.29;
+  target_pose.position.y = 0.10;
+  target_pose.position.z = 0.18;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
+  target_pose.position.x = 0.29;
+  target_pose.position.y = 0.10;
+  target_pose.position.z = 0.1;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
+  break;
+}
+
+case 4:{
+  //アームの手先を物体へ
+
+  target_pose.position.x = 0.29;
+  target_pose.position.y = 0.20;
+  target_pose.position.z = 0.18;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
+  target_pose.position.x = 0.29;
+  target_pose.position.y = 0.20;
+  target_pose.position.z = 0.1;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
+  break;
+}
+
+case 5:{
+  //アームの手先を物体へ
+
+  target_pose.position.x = 0.2;
+  target_pose.position.y = 0.2;
+  target_pose.position.z = 0.18;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
+  target_pose.position.x = 0.2;
+  target_pose.position.y = 0.2;
+  target_pose.position.z = 0.1;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
+  break;
+}
+
+default:
+  break;
+}//switch
+
   //掴む
   gripper_joint_values[0] = angles::from_degrees(5);
   move_group_gripper.setJointValueTarget(gripper_joint_values);
   move_group_gripper.move();
-  
+
   // 持ち上げる
   target_pose.position.x = 0.29;
-  target_pose.position.y = 0.0; 
-  target_pose.position.z = 0.3; 
+  target_pose.position.y = 0.0;
+  target_pose.position.z = 0.3;
   q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
@@ -144,7 +258,7 @@ if(node->value){
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
-  
+
   target_pose.position.x = 0.0;
   target_pose.position.y = 0.3;
   target_pose.position.z = 0.12;
@@ -152,8 +266,8 @@ if(node->value){
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
- 
-  //物体を離す 
+
+  //物体を離す
   gripper_joint_values[0] = angles::from_degrees(60);
   move_group_gripper.setJointValueTarget(gripper_joint_values);
   move_group_gripper.move();
@@ -173,6 +287,7 @@ if(node->value){
   //homeの姿勢に戻る
   move_group_arm.setNamedTarget("home");
   move_group_arm.move();
+
 }//if
 
   rclcpp::shutdown();
