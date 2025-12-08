@@ -11,7 +11,7 @@ from numpy.lib.type_check import imag
 import rclpy
 from rclpy.node import Node
 from rclpy.executors import SingleThreadedExecutor
-from std_msgs.msg import String
+from std_msgs.msg import Int16
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -20,7 +20,7 @@ mp_hands = mp.solutions.hands
 class HandNode(Node):
     def __init__(self):
         super().__init__('hand_node')
-        self.pub = self.create_publisher(String, 'finger_num', 10)
+        self.pub = self.create_publisher(Int16, 'finger_num', 10)
 
 
 def main(args=None):
@@ -34,7 +34,7 @@ def main(args=None):
 
     
     while True: #not rospy.is_shutdown():
-      finger_num = None
+      finger_num = 0
 
       success, image = cap.read()
       if not success:
@@ -112,10 +112,10 @@ def main(args=None):
       cv2.imshow('MediaPipe Hands', image)
 
       # publish
-      msg = String()
-      msg.data = str(finger_num)
+      msg = Int16()
+      msg.data = int(finger_num)
       node.pub.publish(msg)
-      node.get_logger().info(f"Publish: {msg.data}")
+      #node.get_logger().info(f"Publish: {msg.data}")
       
       if cv2.waitKey(5) & 0xFF == 27:
         break
