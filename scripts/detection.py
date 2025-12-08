@@ -96,8 +96,21 @@ def main(args=None):
                  finger_open[i] = "close"
           if finger_open[1] == "open" and all(f == "close" for f in [finger_open[0], finger_open[2], finger_open[3], finger_open[4]]):
                 finger_num = 1
-          
-          
+
+          elif finger_open[1] == "open" and finger_open[2] == "open" and all(f == "close" for f in [finger_open[0], finger_open[3], finger_open[4]]):
+                finger_num = 2
+
+          elif finger_open[1] == "open" and finger_open[2] == "open" and finger_open[3] == "open" and all(f == "close" for f in [finger_open[0], finger_open[4]]):
+                finger_num = 3
+
+          elif finger_open[1] == "open" and finger_open[2] == "open" and finger_open[3] == "open" and finger_open[4] == "open" and all(f == "close" for f in [finger_open[0]]):
+                finger_num = 4
+
+          elif all(f == "open" for f in finger_open):
+                finger_num = 5
+                
+
+
           #カメラ画像に値を表示させたい場合は
           cv2.putText(image,"finger_thump:"+str(finger_thump)+":"+str(finger_open[0]),(10,30),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
           cv2.putText(image,"finger_index:"+str(finger_index)+":"+str(finger_open[1]),(10,60),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
