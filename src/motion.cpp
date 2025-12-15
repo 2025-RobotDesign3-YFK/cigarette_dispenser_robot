@@ -125,17 +125,32 @@ case 1:{
   //geometry_msgs::msg::Pose target_pose;
   //tf2::Quaternion q;
 
-  target_pose.position.x = 0.29;
-  target_pose.position.y = 0.0;
-  target_pose.position.z = 0.18;
+  target_pose.position.x = 0.20;
+  target_pose.position.y = 0.10;
+  target_pose.position.z = 0.20;
   q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
-  target_pose.position.x = 0.29;
-  target_pose.position.y = 0.0;
-  target_pose.position.z = 0.1;
+  target_pose.position.x = 0.20;
+  target_pose.position.y = 0.10;
+  target_pose.position.z = 0.15;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
+  //掴む
+  gripper_joint_values[0] = angles::from_degrees(2);
+  move_group_gripper.setJointValueTarget(gripper_joint_values);
+  move_group_gripper.move();
+
+
+  // 持ち上げる
+  target_pose.position.x = 0.20;
+  target_pose.position.y = 0.10;
+  target_pose.position.z = 0.30;
   q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
@@ -147,21 +162,37 @@ case 1:{
 case 2:{
   //アームの手先を物体へ
 
-  target_pose.position.x = 0.20;
-  target_pose.position.y = 0.0;
-  target_pose.position.z = 0.18;
+  target_pose.position.x = 0.37;
+  target_pose.position.y = 0.04;
+  target_pose.position.z = 1.2;
   q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
-  target_pose.position.x = 0.20;
-  target_pose.position.y = 0.0;
-  target_pose.position.z = 0.1;
+  target_pose.position.x = 0.37;
+  target_pose.position.y = 0.04;
+  target_pose.position.z = 1.1;
   q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
+
+  //掴む
+  gripper_joint_values[0] = angles::from_degrees(5);
+  move_group_gripper.setJointValueTarget(gripper_joint_values);
+  move_group_gripper.move();
+
+
+  // 持ち上げる
+  target_pose.position.x = 0.37;
+  target_pose.position.y = 0.04;
+  target_pose.position.z = 1.3;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
 
   break;
 }
@@ -169,21 +200,37 @@ case 2:{
 case 3:{
   //アームの手先を物体へ
 
-  target_pose.position.x = 0.29;
-  target_pose.position.y = 0.10;
-  target_pose.position.z = 0.18;
+  target_pose.position.x = 0.37;
+  target_pose.position.y = -0.02;
+  target_pose.position.z = 1.3;
   q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
-  target_pose.position.x = 0.29;
-  target_pose.position.y = 0.10;
-  target_pose.position.z = 0.1;
+  target_pose.position.x = 0.37;
+  target_pose.position.y = -0.02;
+  target_pose.position.z = 1.2;
   q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
+
+  //掴む
+  gripper_joint_values[0] = angles::from_degrees(5);
+  move_group_gripper.setJointValueTarget(gripper_joint_values);
+  move_group_gripper.move();
+
+
+  // 持ち上げる
+  target_pose.position.x = 0.37;
+  target_pose.position.y = -0.02;
+  target_pose.position.z = 1.3;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
 
   break;
 }
@@ -191,17 +238,32 @@ case 3:{
 case 4:{
   //アームの手先を物体へ
 
-  target_pose.position.x = 0.29;
-  target_pose.position.y = 0.20;
-  target_pose.position.z = 0.18;
+  target_pose.position.x = 0.47;
+  target_pose.position.y = 0.08;
+  target_pose.position.z = 1.3;
   q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
-  target_pose.position.x = 0.29;
-  target_pose.position.y = 0.20;
-  target_pose.position.z = 0.1;
+  target_pose.position.x = 0.47;
+  target_pose.position.y = 0.08;
+  target_pose.position.z = 1.2;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
+  //掴む
+  gripper_joint_values[0] = angles::from_degrees(5);
+  move_group_gripper.setJointValueTarget(gripper_joint_values);
+  move_group_gripper.move();
+
+
+  // 持ち上げる
+  target_pose.position.x = 0.47;
+  target_pose.position.y = 0.08;
+  target_pose.position.z = 1.4;
   q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
@@ -213,17 +275,32 @@ case 4:{
 case 5:{
   //アームの手先を物体へ
 
-  target_pose.position.x = 0.2;
-  target_pose.position.y = 0.2;
-  target_pose.position.z = 0.18;
+  target_pose.position.x = 0.46;
+  target_pose.position.y = -0.00;
+  target_pose.position.z = 1.2;
   q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
-  target_pose.position.x = 0.2;
-  target_pose.position.y = 0.2;
-  target_pose.position.z = 0.1;
+  target_pose.position.x = 0.46;
+  target_pose.position.y = -0.00;
+  target_pose.position.z = 1.1;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
+  //掴む
+  gripper_joint_values[0] = angles::from_degrees(5);
+  move_group_gripper.setJointValueTarget(gripper_joint_values);
+  move_group_gripper.move();
+
+
+  // 持ち上げる
+  target_pose.position.x = 0.46;
+  target_pose.position.y = -0.00;
+  target_pose.position.z = 1.2;
   q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
@@ -236,19 +313,6 @@ default:
   break;
 }//switch
 
-  //掴む
-  gripper_joint_values[0] = angles::from_degrees(5);
-  move_group_gripper.setJointValueTarget(gripper_joint_values);
-  move_group_gripper.move();
-
-  // 持ち上げる
-  target_pose.position.x = 0.29;
-  target_pose.position.y = 0.0;
-  target_pose.position.z = 0.3;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
 
   //物体を掴んだまま移動する
   target_pose.position.x = 0.0;
