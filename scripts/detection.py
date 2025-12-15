@@ -33,7 +33,7 @@ def main(args=None):
     min_tracking_confidence=0.5) as hands:
 
 
-    while True: #not rospy.is_shutdown():
+    while True:
       finger_num = 0
 
       success, image = cap.read()
@@ -54,6 +54,7 @@ def main(args=None):
               landmark_x = min(int(landmark.x * image_width), image_width - 1)
               landmark_y = min(int(landmark.y * image_height), image_height - 1)
 
+
               #必要な手の関節座標を変数に格納
               if index == 0:
                   cx0,cy0 = landmark_x, landmark_y
@@ -61,8 +62,8 @@ def main(args=None):
                   cx4,cy4 = landmark_x, landmark_y
               if index == 8:
                   cx8,cy8 = landmark_x, landmark_y
-             # if index == 9:
-              #    cx9,cy9 = landmark_x, landmark_y
+              if index == 9:
+                  cx9,cy9 = landmark_x, landmark_y
               if index == 12:
                   cx12,cy12 = landmark_x, landmark_y
               if index == 16:
@@ -84,12 +85,17 @@ def main(args=None):
           finger_middle = int(math.sqrt((cx12-cx0)**2 + (cy12-cy0)**2))
           finger_ring   = int(math.sqrt((cx16-cx0)**2 + (cy16-cy0)**2))
           finger_little = int(math.sqrt((cx20-cx0)**2 + (cy20-cy0)**2))
+          palm_length = int(math.sqrt((cx9-cx0)**2 + (cy9-cy0)**2))
 
-          threshold = [100,200,200,200,200]
+          threshold = int(palm_length)
+
+          thresholds = [threshold] * 5
+          #threshold = [100,200,200,200,200]
+          #threshold = [threshold_thump, threshold_index, threshold_middle, threshold_ring, threshold_little]
           finger_open = ["close"] * 5
           fingers = [finger_thump, finger_index, finger_middle, finger_ring, finger_little]
 
-          for i,fing,thres in zip(range(5),fingers,threshold):
+          for i,fing,thres in zip(range(5),fingers,thresholds):
             if fing > thres:
                  finger_open[i] = "open"
             else:
@@ -103,7 +109,7 @@ def main(args=None):
           elif finger_open[1] == "open" and finger_open[2] == "open" and finger_open[3] == "open" and all(f == "close" for f in [finger_open[0], finger_open[4]]):
                 finger_num = 3
 
-          elif finger_open[1] == "open" and finger_open[2] == "open" and finger_open[3] == "open" and finger_open[4] == "open" and all(f == "close" for f in [finger_open[0]]):
+          elif all(f == "open" for f in [finger_open[1], finger_open[2], finger_open[3], finger_open[4]]) and all(f == "close" for f in [finger_open[0]]):
                 finger_num = 4
 
           elif all(f == "open" for f in finger_open):
@@ -136,6 +142,6 @@ def main(args=None):
 if __name__ == '__main__':
     try:
       main()
-    except Exception as e:# rospy.ROSInterruptException: 
+    except Exception as e:
       print("Error:", e)
       pass
