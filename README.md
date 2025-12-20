@@ -65,9 +65,9 @@ git clone https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot.git
 ### 実機で実行する場合
 
 - **USBの権限を設定**
-  ```bash
-  sudo chmod 666 /dev/ttyUSB0
-  ```
+ ```bash
+ sudo chmod 666 /dev/ttyUSB0
+ ```
 - **terminal 1:**
  ```bash
  ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0
