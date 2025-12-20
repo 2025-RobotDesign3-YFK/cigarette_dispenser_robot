@@ -31,14 +31,7 @@ include_directories(include)
 ##add_executable(cpp_executable src/cpp_node.cpp)
 ##ament_target_dependencies(cpp_executable rclcpp)
 
-add_executable(cpp_listener src/subscriber_cpp.cpp)
-target_link_libraries(cpp_listener PUBLIC rclcpp::rclcpp ${std_msgs_TARGETS})
-
 # Install Cpp executables in the ros2_ws/install/cpp_py_pkg/lib/cpp_py_pkg/ folder
-install(TARGETS#cpp_executable
-  cpp_listener
-  DESTINATION lib/${PROJECT_NAME}
-)
 
 add_executable(motion src/motion.cpp)
 ament_target_dependencies(motion
@@ -49,6 +42,7 @@ ament_target_dependencies(motion
     OpenCV
     rclcpp
     tf2_geometry_msgs
+    std_msgs
 )
 install(TARGETS
   motion 

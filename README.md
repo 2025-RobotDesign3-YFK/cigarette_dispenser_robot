@@ -24,8 +24,14 @@ cd cigarette_dispenser_robot
 - **terminal 1:** `ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py`
 - **terminal 2:** `ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py use_sim_time:='true'`
 
+### 実機で実行する場合
+
+- **terminal 1:** `ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0`
+- **terminal 2:** `ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py`
+
+
 ## ライセンス
-- (C) 2025 Hiroto Fujitake, Syougo Yamasita, Reoto Koya
+- © 2025 Hiroto Fujitake, Shogo Yamashita, Reoto Koya
 - このパッケージは、CIT-Autonomous-Robot-Labの公開する[パッケージ](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples)の[src](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples/blob/main/src)のpick_and_move.cppの改変によって作成されました.
 - このパッケージはApache License, Version 2.0に基づき公開されています.  
 - ライセンスの全文は[LICENSE](./LICENSE)から確認できます.  
