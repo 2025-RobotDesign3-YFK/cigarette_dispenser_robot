@@ -8,7 +8,7 @@ CRANE-X7とmediaPipeを連携させてシガレットをピッキングするROS
 
 ## デモ
 
-
+https://github.com/user-attachments/assets/0f1407a0-f818-47fb-8144-fadb2eecd3ec
 
 ## 使用方法
 
