@@ -49,7 +49,7 @@ git clone https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot.git
  pip3 install opencv-contrib-python mediapipe==0.10.8
  ```
 
-##使用方法
+## 使用方法
 
 ### Gazeboで実行する場合
 
