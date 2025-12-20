@@ -8,25 +8,24 @@
 #include "geometry_msgs/msg/pose.hpp"
 #include "geometry_msgs/msg/quaternion.hpp"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
-#include "std_msgs/msg/int16.hpp"//int16
+#include "std_msgs/msg/int16.hpp"
 
 using MoveGroupInterface = moveit::planning_interface::MoveGroupInterface;
 
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("pick_and_move");
 
 
-////subscliber
+
 class MinimalSubscriber : public rclcpp::Node
 {
 public:
-int value = 0;//
+int value = 0;
   MinimalSubscriber()
   : Node("minimal_subscriber")
   {
     auto topic_callback =
       [this](std_msgs::msg::Int16::UniquePtr msg) -> void {
-        //RCLCPP_INFO(this->get_logger(), "subscribed: '%d'", msg->data);
-        this->value = msg->data;//
+        this->value = msg->data;
       };
     subscription_ =
       this->create_subscription<std_msgs::msg::Int16>("finger_num", 10, topic_callback);
@@ -75,12 +74,12 @@ void pick1(MoveGroupInterface& move_group_arm,
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
-}//
+}
 
 
 int main(int argc, char ** argv){
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<MinimalSubscriber>();//
+    auto node = std::make_shared<MinimalSubscriber>();
 
 rclcpp::WallRate loop(0.5);
 
@@ -152,36 +151,30 @@ if(node->value != 0){
 switch(node->value){
 
 case 1:{
-  //各座標の変更
-  //アームの手先を物体へ
 pick1(move_group_arm, move_group_gripper, gripper_joint_values,
       0.18, 0.09, 0.2, 0.15, 0.3);
   break;
 }
 
 case 2:{
-  //アームの手先を物体へ
 pick1(move_group_arm, move_group_gripper, gripper_joint_values,
       0.18, 0.03, 0.2, 0.15, 0.3);
   break;
 }
 
 case 3:{
-  //アームの手先を物体へ
 pick1(move_group_arm, move_group_gripper, gripper_joint_values,
       0.18, -0.03, 0.2, 0.15, 0.3);
   break;
 }
 
 case 4:{
-  //アームの手先を物体へ
 pick1(move_group_arm, move_group_gripper, gripper_joint_values,
       0.27, 0.08, 0.3, 0.23, 0.3);
   break;
 }
 
 case 5:{
-  //アームの手先を物体へ
 pick1(move_group_arm, move_group_gripper, gripper_joint_values,
       0.27, -0.01, 0.3, 0.23, 0.3);
   break;
@@ -189,7 +182,7 @@ pick1(move_group_arm, move_group_gripper, gripper_joint_values,
 
 default:
   break;
-}//switch
+}
 
 
   //物体を掴んだまま移動する
@@ -200,7 +193,7 @@ default:
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
-  //ここのｚ軸座標も調整した
+
   target_pose.position.x = 0.0;
   target_pose.position.y = 0.3;
   target_pose.position.z = 0.15;
@@ -223,18 +216,15 @@ default:
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
-  // 可動範囲の制限を解除
-  //move_group_arm.clearPathConstraints();
-
   //homeの姿勢に戻る
   move_group_arm.setNamedTarget("home");
   move_group_arm.move();
 
-node->value = 0;//
+node->value = 0;
 RCLCPP_INFO(rclcpp::get_logger("my_logger"), "value 0");
 
-}//if
-}//while
+	}
+}
 
 RCLCPP_INFO(rclcpp::get_logger("my_logger"), "finish");
 

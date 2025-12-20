@@ -71,13 +71,6 @@ def main(args=None):
               if index == 20:
                   cx20,cy20 = landmark_x, landmark_y
 
-          #取得した座標より各指の中間点を表示
-          #gap1x,gap1y = (cx0+cx9)/2, (cy0+cy9)/2
-          #gap1x = int(gap1x)
-          #gap1y = int(gap1y)
-          #cv2.circle(image, (gap1x,gap1y), 5, (0, 255, 0), 2)
-          #gap1x,gap1y = gap1x-image_width/2,-(gap1y-image_height/2)
-
 
           #取得した座標より各指の手首との距離を計算
           finger_thump  = int(math.sqrt((cx4-cx0)**2))
@@ -90,8 +83,6 @@ def main(args=None):
           threshold = int(palm_length)
 
           thresholds = [threshold] * 5
-          #threshold = [100,200,200,200,200]
-          #threshold = [threshold_thump, threshold_index, threshold_middle, threshold_ring, threshold_little]
           finger_open = ["close"] * 5
           fingers = [finger_thump, finger_index, finger_middle, finger_ring, finger_little]
 
@@ -134,7 +125,6 @@ def main(args=None):
       msg = Int16()
       msg.data = int(finger_num)
       node.pub.publish(msg)
-      #node.get_logger().info(f"Publish: {msg.data}")
 
       if cv2.waitKey(5) & 0xFF == 27:
         break
