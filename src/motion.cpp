@@ -8,25 +8,24 @@
 #include "geometry_msgs/msg/pose.hpp"
 #include "geometry_msgs/msg/quaternion.hpp"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
-#include "std_msgs/msg/int16.hpp"//int16
+#include "std_msgs/msg/int16.hpp"
 
 using MoveGroupInterface = moveit::planning_interface::MoveGroupInterface;
 
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("pick_and_move");
 
 
-////subscliber
+
 class MinimalSubscriber : public rclcpp::Node
 {
 public:
-int value = 0;//
+int value = 0;
   MinimalSubscriber()
   : Node("minimal_subscriber")
   {
     auto topic_callback =
       [this](std_msgs::msg::Int16::UniquePtr msg) -> void {
-        //RCLCPP_INFO(this->get_logger(), "subscribed: '%d'", msg->data);
-        this->value = msg->data;//
+        this->value = msg->data;
       };
     subscription_ =
       this->create_subscription<std_msgs::msg::Int16>("finger_num", 10, topic_callback);
@@ -37,7 +36,7 @@ private:
 };
 
 
-void pick1(MoveGroupInterface& move_group_arm,
+void pick(MoveGroupInterface& move_group_arm,
             MoveGroupInterface& move_group_gripper,
             std::vector<double>& gripper_joint_values,
             double x, double y, double before_z, double after_z, double pick_z)
@@ -75,12 +74,12 @@ void pick1(MoveGroupInterface& move_group_arm,
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
-}//
+}
 
 
 int main(int argc, char ** argv){
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<MinimalSubscriber>();//
+    auto node = std::make_shared<MinimalSubscriber>();
 
 rclcpp::WallRate loop(0.5);
 
@@ -152,165 +151,44 @@ if(node->value != 0){
 switch(node->value){
 
 case 1:{
+<<<<<<< HEAD
   //アームの手先を物体へ
 pick1(move_group_arm, move_group_gripper, gripper_joint_values,
       0.21, 0.09, 0.2, 0.15, 0.2);
+=======
+pick(move_group_arm, move_group_gripper, gripper_joint_values,
+      0.18, 0.09, 0.2, 0.15, 0.3);
+>>>>>>> c1e130e369f8c69712a1c7936e187eefddb3ad35
   break;
 }
 
 case 2:{
-  //アームの手先を物体へ
-
-  target_pose.position.x = 0.21;
-  target_pose.position.y = 0.03;
-  target_pose.position.z = 0.2;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
-  target_pose.position.x = 0.21;
-  target_pose.position.y = 0.03;
-  target_pose.position.z = 0.15;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
-  //掴む
-  gripper_joint_values[0] = angles::from_degrees(5);
-  move_group_gripper.setJointValueTarget(gripper_joint_values);
-  move_group_gripper.move();
-
-
-  // 持ち上げる
-  target_pose.position.x = 0.21;
-  target_pose.position.y = 0.03;
-  target_pose.position.z = 0.4;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
-
+pick(move_group_arm, move_group_gripper, gripper_joint_values,
+      0.18, 0.03, 0.2, 0.15, 0.3);
   break;
 }
 
 case 3:{
-  //アームの手先を物体へ
-
-  target_pose.position.x = 0.21;
-  target_pose.position.y = -0.03;
-  target_pose.position.z = 0.2;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
-  target_pose.position.x = 0.21;
-  target_pose.position.y = -0.03;
-  target_pose.position.z = 0.15;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
-  //掴む
-  gripper_joint_values[0] = angles::from_degrees(5);
-  move_group_gripper.setJointValueTarget(gripper_joint_values);
-  move_group_gripper.move();
-
-
-  // 持ち上げる
-  target_pose.position.x = 0.1;
-  target_pose.position.y = -0.03;
-  target_pose.position.z = 0.4;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
-
+pick(move_group_arm, move_group_gripper, gripper_joint_values,
+      0.18, -0.03, 0.2, 0.15, 0.3);
   break;
 }
 
 case 4:{
-  //アームの手先を物体へ
-
-  target_pose.position.x = 0.32;
-  target_pose.position.y = 0.08;
-  target_pose.position.z = 0.3;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
-  target_pose.position.x = 0.32;
-  target_pose.position.y = 0.08;
-  target_pose.position.z = 0.2;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
-  //掴む
-  gripper_joint_values[0] = angles::from_degrees(5);
-  move_group_gripper.setJointValueTarget(gripper_joint_values);
-  move_group_gripper.move();
-
-
-  // 持ち上げる
-  target_pose.position.x = 0.47;
-  target_pose.position.y = 0.08;
-  target_pose.position.z = 0.5;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
+pick(move_group_arm, move_group_gripper, gripper_joint_values,
+      0.27, 0.08, 0.3, 0.23, 0.3);
   break;
 }
 
 case 5:{
-  //アームの手先を物体へ
-
-  target_pose.position.x = 0.32;
-  target_pose.position.y = -0.01;
-  target_pose.position.z = 0.3;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
-  target_pose.position.x = 0.32;
-  target_pose.position.y = -0.01;
-  target_pose.position.z = 0.2;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
-  //掴む
-  gripper_joint_values[0] = angles::from_degrees(5);
-  move_group_gripper.setJointValueTarget(gripper_joint_values);
-  move_group_gripper.move();
-
-
-  // 持ち上げる
-  target_pose.position.x = 0.32;
-  target_pose.position.y = -0.01;
-  target_pose.position.z = 0.5;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
+pick(move_group_arm, move_group_gripper, gripper_joint_values,
+      0.27, -0.01, 0.3, 0.23, 0.3);
   break;
 }
 
 default:
   break;
-}//switch
+}
 
 
   //物体を掴んだまま移動する
@@ -324,7 +202,7 @@ default:
 
   target_pose.position.x = 0.0;
   target_pose.position.y = 0.3;
-  target_pose.position.z = 0.12;
+  target_pose.position.z = 0.15;
   q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
   target_pose.orientation = tf2::toMsg(q);
   move_group_arm.setPoseTarget(target_pose);
@@ -344,18 +222,15 @@ default:
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
-  // 可動範囲の制限を解除
-  //move_group_arm.clearPathConstraints();
-
   //homeの姿勢に戻る
   move_group_arm.setNamedTarget("home");
   move_group_arm.move();
 
-node->value = 0;//
+node->value = 0;
 RCLCPP_INFO(rclcpp::get_logger("my_logger"), "value 0");
 
-}//if
-}//while
+    }
+}
 
 RCLCPP_INFO(rclcpp::get_logger("my_logger"), "finish");
 
