@@ -8,7 +8,7 @@ CRANE-X7とmediaPipeを連携させてシガレットをピッキングするROS
 
 ## デモ
 
-<!-- Failed to upload "F59EEE79E74470D3E5E7F1CF90D52CB9755A4F23.mp4" -->
+
 
 ## 使用方法
 
