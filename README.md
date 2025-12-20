@@ -22,9 +22,9 @@ https://github.com/user-attachments/assets/0f1407a0-f818-47fb-8144-fadb2eecd3ec
 
 ### 1.ROS 2及びCRANE-X7セットアップ
 
-* ROS 2インストール
+**ROS 2インストール**
 　　上田先生の[動画](https://youtu.be/mBhtD08f5KY)及び[インストールスクリプト](https://github.com/ryuichiueda/ros2_setup_scripts)を参照し, インストールを行ってください.
-* CRANE-X7及び関連パッケージのインストール
+**CRANE-X7及び関連パッケージのインストール**
 　　[RT社公式リポジトリ](https://github.com/rt-net/crane_x7_ros/tree/ros2)よりインストールできます.
 
 ### 2.リポジトリのクローン
