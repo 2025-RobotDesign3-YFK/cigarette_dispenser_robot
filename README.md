@@ -1,5 +1,6 @@
 # CRANE-X7_cigarette_dispenser_robot
 
+[![test](https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot/actions/workflows/test.yml/badge.svg?branch=dev)](https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot/actions/workflows/test.yml)
 ## 概要
 CRANE-X7とMediaPipeを連携させて指の動作に応じたシガレットをピッキングするROS2パッケージです.
 
