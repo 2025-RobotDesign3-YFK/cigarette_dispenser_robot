@@ -36,7 +36,7 @@ private:
 };
 
 
-void pick1(MoveGroupInterface& move_group_arm,
+void pick(MoveGroupInterface& move_group_arm,
             MoveGroupInterface& move_group_gripper,
             std::vector<double>& gripper_joint_values,
             double x, double y, double before_z, double after_z, double pick_z)
@@ -151,31 +151,31 @@ if(node->value != 0){
 switch(node->value){
 
 case 1:{
-pick1(move_group_arm, move_group_gripper, gripper_joint_values,
+pick(move_group_arm, move_group_gripper, gripper_joint_values,
       0.18, 0.09, 0.2, 0.15, 0.3);
   break;
 }
 
 case 2:{
-pick1(move_group_arm, move_group_gripper, gripper_joint_values,
+pick(move_group_arm, move_group_gripper, gripper_joint_values,
       0.18, 0.03, 0.2, 0.15, 0.3);
   break;
 }
 
 case 3:{
-pick1(move_group_arm, move_group_gripper, gripper_joint_values,
+pick(move_group_arm, move_group_gripper, gripper_joint_values,
       0.18, -0.03, 0.2, 0.15, 0.3);
   break;
 }
 
 case 4:{
-pick1(move_group_arm, move_group_gripper, gripper_joint_values,
+pick(move_group_arm, move_group_gripper, gripper_joint_values,
       0.27, 0.08, 0.3, 0.23, 0.3);
   break;
 }
 
 case 5:{
-pick1(move_group_arm, move_group_gripper, gripper_joint_values,
+pick(move_group_arm, move_group_gripper, gripper_joint_values,
       0.27, -0.01, 0.3, 0.23, 0.3);
   break;
 }
@@ -223,7 +223,7 @@ default:
 node->value = 0;
 RCLCPP_INFO(rclcpp::get_logger("my_logger"), "value 0");
 
-	}
+    }
 }
 
 RCLCPP_INFO(rclcpp::get_logger("my_logger"), "finish");
