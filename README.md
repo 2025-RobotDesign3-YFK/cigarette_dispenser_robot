@@ -1,11 +1,9 @@
 # CRANE-X7_cigarette_dispenser_robot
 
-![test](https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot/actions/workflows/test.yml/badge.svg?branch=dev)
-
 ## 概要
-CRANE-X7とmediaPipeを連携させて指の動作に応じたシガレットをピッキングするROS2パッケージです.
+CRANE-X7とMediaPipeを連携させて指の動作に応じたシガレットをピッキングするROS2パッケージです.
 
-- **画像認識**    : mediaPipeを用いて、指の本数を検知してトリガーとする.
+- **画像認識**    : MediaPipeを用いて、指の本数を検知してトリガーとする.
 - **アームの制御**: 検知結果に基づいて、シガレットのピッキング動作を行う.
 
 ## デモ
@@ -30,6 +28,7 @@ git clone https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot.git
  ```bash
  ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py use_sim_time:='true'
  ```
+
 ### 実機で実行する場合
 
 - **terminal 1:**
