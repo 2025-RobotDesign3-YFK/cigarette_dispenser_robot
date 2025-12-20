@@ -9,5 +9,6 @@ source $dir/.bashrc
 #timeout 10 ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py > /tmp/mypkg.log
 echo "start"
 #ros2 run cigarette_dispenser_robot detection.py
+ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py
 
 #cat /tmp/mypkg.log
