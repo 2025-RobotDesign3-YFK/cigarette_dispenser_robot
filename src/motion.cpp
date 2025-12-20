@@ -176,14 +176,14 @@ pick1(move_group_arm, move_group_gripper, gripper_joint_values,
 case 4:{
   //アームの手先を物体へ
 pick1(move_group_arm, move_group_gripper, gripper_joint_values,
-      0.27, 0.08, 0.3, 0.22, 0.3);
+      0.27, 0.08, 0.3, 0.23, 0.3);
   break;
 }
 
 case 5:{
   //アームの手先を物体へ
 pick1(move_group_arm, move_group_gripper, gripper_joint_values,
-      0.27, -0.01, 0.3, 0.22, 0.3);
+      0.27, -0.01, 0.3, 0.23, 0.3);
   break;
 }
 
