@@ -1,7 +1,9 @@
 # CRANE-X7_cigarette_dispenser_robot
 
+![test](https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot/actions/workflows/test.yml/badge.svg)
+
 ## 概要
-CRANE-X7とmediaPipeを連携させてシガレットをピッキングする開発中のROS2パッケージです.
+CRANE-X7とmediaPipeを連携させて指の動作に応じたシガレットをピッキングするROS2パッケージです.
 
 - **画像認識**    : mediaPipeを用いて、指の本数を検知してトリガーとする.
 - **アームの制御**: シガレットのピッキング動作を行う.
@@ -20,13 +22,24 @@ git clone https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot.git
 
 ### Gazeboで実行する場合
 
-- **terminal 1:** `bash ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py`
-- **terminal 2:** `ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py use_sim_time:='true'`
-
+- **terminal 1:**
+ ```bash
+ ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py
+ ```
+- **terminal 2:**
+ ```bash
+ ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py use_sim_time:='true'
+ ```
 ### 実機で実行する場合
 
-- **terminal 1:** `ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0`
-- **terminal 2:** `ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py`
+- **terminal 1:**
+ ```bash
+ ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0
+ ```
+- **terminal 2:**
+ ```bash
+ ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py
+ ```
 
 
 ## ライセンス
