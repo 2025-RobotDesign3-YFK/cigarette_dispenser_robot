@@ -83,7 +83,7 @@ git clone https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot.git
 
 ## ライセンス
 - © 2025 Hiroto Fujitake, Shogo Yamashita, Reoto Koya
-- このパッケージは、CIT-Autonomous-Robot-Labの公開する[パッケージ](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples)の[src](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples/blob/main/src)のpick_and_move.cppと、[launch](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_sim    ple_examples/blob/main/launch)の改変によって作成されています.
+- このパッケージは、CIT-Autonomous-Robot-Labの公開する[パッケージ](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples)の[src](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples/blob/main/src)のpick_and_move.cppと、[launch](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples/blob/main/launch)の改変によって作成されています.
 - このパッケージはApache License, Version 2.0に基づき公開されています.  
 - ライセンスの全文は[LICENSE](./LICENSE)から確認できます.  
 
