@@ -151,8 +151,14 @@ if(node->value != 0){
 switch(node->value){
 
 case 1:{
+<<<<<<< HEAD
+  //アームの手先を物体へ
+pick1(move_group_arm, move_group_gripper, gripper_joint_values,
+      0.21, 0.09, 0.2, 0.15, 0.2);
+=======
 pick(move_group_arm, move_group_gripper, gripper_joint_values,
       0.18, 0.09, 0.2, 0.15, 0.3);
+>>>>>>> c1e130e369f8c69712a1c7936e187eefddb3ad35
   break;
 }
 

@@ -1,38 +1,86 @@
 # CRANE-X7_cigarette_dispenser_robot
 
 ## 概要
-CRANE-X7とmediaPipeを連携させてシガレットをピッキングするROS2パッケージです.
+CRANE-X7とMediaPipeを連携させて指の動作に応じたシガレットをピッキングするROS2パッケージです.
 
-- **画像認識**    : mediaPipeを用いて、指の本数を検知してトリガーとする.
+- **画像認識**    : MediaPipeを用いて、指の本数を検知してトリガーとする.
 - **アームの制御**: 検知結果に基づいて、シガレットのピッキング動作を行う.
 
 ## デモ
 
 https://github.com/user-attachments/assets/0f1407a0-f818-47fb-8144-fadb2eecd3ec
 
-## 使用方法
+## 動作環境
 
-### リポジトリのクローン
+- **OS**: Ubuntu 22.04 LTS
+- **ROS Version**: ROS 2 Humble
+- **シュミレータ**: Gazebo
+- **ライブラリ**: MediaPipe, OpenCV 
+- **ハードウェア**: CRANE-X7
+
+## セットアップ
+
+### 1.ROS 2及びCRANE-X7セットアップ
+
+**ROS 2インストール**
+　　上田先生の[動画](https://youtu.be/mBhtD08f5KY)及び[インストールスクリプト](https://github.com/ryuichiueda/ros2_setup_scripts)を参照し, インストールを行ってください.
+**CRANE-X7及び関連パッケージのインストール**
+　　[RT社公式リポジトリ](https://github.com/rt-net/crane_x7_ros/tree/ros2)よりインストールできます.
+
+### 2.リポジトリのクローン
 
 ```bash
+cd ~/ros2_ws/src 
 git clone https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot.git
-cd cigarette_dispenser_robot
 ```
+
+### 3.MediaPipeのインストール
+
+- **pipのインストール**
+ ```bash
+ sudo apt install python3-pip
+ ```
+- **ros2_wsディレクトリ内でMediaPipeをインストール**
+ ```bash
+ # pip自体のアップグレード（念のため）
+ pip3 install --upgrade pip
+
+ # OpenCVとMediaPipeのインストール
+ pip3 install opencv-contrib-python mediapipe==0.10.8
+ ```
+
+## 使用方法
 
 ### Gazeboで実行する場合
 
-- **terminal 1:** `ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py`
-- **terminal 2:** `ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py use_sim_time:='true'`
+- **terminal 1:**
+ ```bash
+ ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py
+ ```
+- **terminal 2:**
+ ```bash
+ ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py use_sim_time:='true'
+ ```
 
 ### 実機で実行する場合
 
-- **terminal 1:** `ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0`
-- **terminal 2:** `ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py`
+- **USBの権限を設定**
+ ```bash
+ sudo chmod 666 /dev/ttyUSB0
+ ```
+- **terminal 1:**
+ ```bash
+ ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0
+ ```
+- **terminal 2:**
+ ```bash
+ ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py
+ ```
 
 
 ## ライセンス
 - © 2025 Hiroto Fujitake, Shogo Yamashita, Reoto Koya
-- このパッケージは、CIT-Autonomous-Robot-Labの公開する[パッケージ](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples)の[src](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples/blob/main/src)のpick_and_move.cppの改変によって作成されました.
+- このパッケージは、CIT-Autonomous-Robot-Labの公開する[パッケージ](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples)の[src](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples/blob/main/src)のpick_and_move.cppの改変によって作成されています.
 - このパッケージはApache License, Version 2.0に基づき公開されています.  
 - ライセンスの全文は[LICENSE](./LICENSE)から確認できます.  
 
