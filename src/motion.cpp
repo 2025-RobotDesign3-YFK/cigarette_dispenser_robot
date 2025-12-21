@@ -1,19 +1,18 @@
 // SPDX-FileCopyrightText: 2023 Keitaro Nakamura,Ryotaro karikomi
 // SPDX-License-Identifier: Apache 2.0
-#include <cmath>
 
-#include "angles/angles.h"
-#include "moveit/move_group_interface/move_group_interface.h"
+#include <cmath>
 #include "rclcpp/rclcpp.hpp"
+#include "moveit/move_group_interface/move_group_interface.h"
+#include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
+#include "angles/angles.h"
 #include "geometry_msgs/msg/pose.hpp"
 #include "geometry_msgs/msg/quaternion.hpp"
-#include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
 #include "std_msgs/msg/int16.hpp"
 
 using MoveGroupInterface = moveit::planning_interface::MoveGroupInterface;
 
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("pick_and_move");
-
 
 
 class MinimalSubscriber : public rclcpp::Node
@@ -77,7 +76,51 @@ void pick(MoveGroupInterface& move_group_arm,
 }
 
 
+void place(MoveGroupInterface& move_group_arm,
+            MoveGroupInterface& move_group_gripper,
+            std::vector<double>& gripper_joint_values,
+            double x, double y, double before_z, double after_z, double place_z)
+{
+  geometry_msgs::msg::Pose target_pose;
+  tf2::Quaternion q;
+
+  //物体を掴んだまま移動する
+  target_pose.position.x = x;
+  target_pose.position.y = y;
+  target_pose.position.z = before_z;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
+  target_pose.position.x = x;
+  target_pose.position.y = y;
+  target_pose.position.z = after_z;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+
+  //物体を離す
+  gripper_joint_values[0] = angles::from_degrees(60);
+  move_group_gripper.setJointValueTarget(gripper_joint_values);
+  move_group_gripper.move();
+
+  //離した後の姿勢
+  target_pose.position.x = x;
+  target_pose.position.y = y;
+  target_pose.position.z = place_z;
+  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
+  target_pose.orientation = tf2::toMsg(q);
+  move_group_arm.setPoseTarget(target_pose);
+  move_group_arm.move();
+}
+
+
 int main(int argc, char ** argv){
+
+RCLCPP_INFO(rclcpp::get_logger("my_logger"), "in main");
+
     rclcpp::init(argc, argv);
     auto node = std::make_shared<MinimalSubscriber>();
 
@@ -139,7 +182,10 @@ rclcpp::WallRate loop(0.5);
 
   move_group_arm.setPathConstraints(constraints);
 
+
 while(rclcpp::ok()){
+
+RCLCPP_INFO(rclcpp::get_logger("my_logger"), "in while");
 
 if(node->value == 0){
   rclcpp::spin_some(node);
@@ -150,33 +196,45 @@ if(node->value == 0){
 if(node->value != 0){
 switch(node->value){
 
+RCLCPP_INFO(rclcpp::get_logger("my_logger"), "in switch");
+
 case 1:{
 pick(move_group_arm, move_group_gripper, gripper_joint_values,
       0.18, 0.09, 0.2, 0.15, 0.3);
+place(move_group_arm, move_group_gripper, gripper_joint_values,
+      0.0, 0.3, 0.3, 0.15, 0.3);
   break;
 }
 
 case 2:{
 pick(move_group_arm, move_group_gripper, gripper_joint_values,
       0.18, 0.03, 0.2, 0.15, 0.3);
+place(move_group_arm, move_group_gripper, gripper_joint_values,
+      0.0, 0.3, 0.3, 0.15, 0.3);
   break;
 }
 
 case 3:{
 pick(move_group_arm, move_group_gripper, gripper_joint_values,
       0.18, -0.03, 0.2, 0.15, 0.3);
+place(move_group_arm, move_group_gripper, gripper_joint_values,
+      0.0, 0.3, 0.3, 0.15, 0.3);
   break;
 }
 
 case 4:{
 pick(move_group_arm, move_group_gripper, gripper_joint_values,
       0.27, 0.08, 0.3, 0.23, 0.3);
+place(move_group_arm, move_group_gripper, gripper_joint_values,
+      0.0, 0.3, 0.3, 0.15, 0.3);
   break;
 }
 
 case 5:{
 pick(move_group_arm, move_group_gripper, gripper_joint_values,
       0.27, -0.01, 0.3, 0.23, 0.3);
+place(move_group_arm, move_group_gripper, gripper_joint_values,
+      0.0, 0.3, 0.3, 0.15, 0.3);
   break;
 }
 
@@ -184,41 +242,9 @@ default:
   break;
 }
 
-
-  //物体を掴んだまま移動する
-  target_pose.position.x = 0.0;
-  target_pose.position.y = 0.3;
-  target_pose.position.z = 0.3;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
-  target_pose.position.x = 0.0;
-  target_pose.position.y = 0.3;
-  target_pose.position.z = 0.15;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
-  //物体を離す
-  gripper_joint_values[0] = angles::from_degrees(60);
-  move_group_gripper.setJointValueTarget(gripper_joint_values);
-  move_group_gripper.move();
-
-  //離した後の姿勢
-  target_pose.position.x = 0.0;
-  target_pose.position.y = 0.3;
-  target_pose.position.z = 0.3;
-  q.setRPY(angles::from_degrees(0), angles::from_degrees(180), angles::from_degrees(0));
-  target_pose.orientation = tf2::toMsg(q);
-  move_group_arm.setPoseTarget(target_pose);
-  move_group_arm.move();
-
-  //homeの姿勢に戻る
-  move_group_arm.setNamedTarget("home");
-  move_group_arm.move();
+//homeの姿勢に戻る
+move_group_arm.setNamedTarget("home");
+move_group_arm.move();
 
 node->value = 0;
 RCLCPP_INFO(rclcpp::get_logger("my_logger"), "value 0");
