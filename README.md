@@ -42,6 +42,8 @@ git clone https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot.git
  ```
 - **ros2_wsディレクトリ内でMediaPipeをインストール**
  ```bash
+ cd ~/ros2_ws
+
  # pip自体のアップグレード（念のため）
  pip3 install --upgrade pip
 
