@@ -11,20 +11,19 @@
 #include "std_msgs/msg/int16.hpp"
 
 using MoveGroupInterface = moveit::planning_interface::MoveGroupInterface;
-
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("pick_and_move");
 
 
 class MinimalSubscriber : public rclcpp::Node
 {
 public:
-int value = 0;
+int finger_number = 0;
   MinimalSubscriber()
   : Node("minimal_subscriber")
   {
     auto topic_callback =
       [this](std_msgs::msg::Int16::UniquePtr msg) -> void {
-        this->value = msg->data;
+        this->finger_number = msg->data;
       };
     subscription_ =
       this->create_subscription<std_msgs::msg::Int16>("finger_num", 10, topic_callback);
@@ -43,6 +42,7 @@ void pick(MoveGroupInterface& move_group_arm,
   geometry_msgs::msg::Pose target_pose;
   tf2::Quaternion q;
 
+  // 物体を掴む
   target_pose.position.x = x;
   target_pose.position.y = y;
   target_pose.position.z = before_z;
@@ -51,6 +51,7 @@ void pick(MoveGroupInterface& move_group_arm,
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
+  // ｚ座標を調整
   target_pose.position.x = x;
   target_pose.position.y = y;
   target_pose.position.z = after_z;
@@ -59,11 +60,10 @@ void pick(MoveGroupInterface& move_group_arm,
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
-  //掴む
+  // 掴む
   gripper_joint_values[0] = angles::from_degrees(2);
   move_group_gripper.setJointValueTarget(gripper_joint_values);
   move_group_gripper.move();
-
 
   // 持ち上げる
   target_pose.position.x = x;
@@ -84,7 +84,7 @@ void place(MoveGroupInterface& move_group_arm,
   geometry_msgs::msg::Pose target_pose;
   tf2::Quaternion q;
 
-  //物体を掴んだまま移動する
+  // 物体を掴んだまま移動
   target_pose.position.x = x;
   target_pose.position.y = y;
   target_pose.position.z = before_z;
@@ -93,6 +93,7 @@ void place(MoveGroupInterface& move_group_arm,
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
+  // 物体を下ろす
   target_pose.position.x = x;
   target_pose.position.y = y;
   target_pose.position.z = after_z;
@@ -101,12 +102,12 @@ void place(MoveGroupInterface& move_group_arm,
   move_group_arm.setPoseTarget(target_pose);
   move_group_arm.move();
 
-  //物体を離す
+  // 物体を離す
   gripper_joint_values[0] = angles::from_degrees(60);
   move_group_gripper.setJointValueTarget(gripper_joint_values);
   move_group_gripper.move();
 
-  //離した後の姿勢
+  // 離した後の姿勢
   target_pose.position.x = x;
   target_pose.position.y = y;
   target_pose.position.z = place_z;
@@ -118,8 +119,6 @@ void place(MoveGroupInterface& move_group_arm,
 
 
 int main(int argc, char ** argv){
-
-RCLCPP_INFO(rclcpp::get_logger("my_logger"), "in main");
 
     rclcpp::init(argc, argv);
     auto node = std::make_shared<MinimalSubscriber>();
@@ -185,19 +184,14 @@ rclcpp::WallRate loop(0.5);
 
 while(rclcpp::ok()){
 
-RCLCPP_INFO(rclcpp::get_logger("my_logger"), "in while");
-
-if(node->value == 0){
+if(node->finger_number == 0){
   rclcpp::spin_some(node);
-  RCLCPP_INFO(node->get_logger(), "subscribed: '%d'", node->value);
+  RCLCPP_INFO(node->get_logger(), "subscribed: '%d'", node->finger_number);
   loop.sleep();
   }
 
-if(node->value != 0){
-switch(node->value){
-
-RCLCPP_INFO(rclcpp::get_logger("my_logger"), "in switch");
-
+if(node->finger_number != 0){
+switch(node->finger_number){
 case 1:{
 pick(move_group_arm, move_group_gripper, gripper_joint_values,
       0.18, 0.09, 0.2, 0.15, 0.3);
@@ -246,13 +240,9 @@ default:
 move_group_arm.setNamedTarget("home");
 move_group_arm.move();
 
-node->value = 0;
-RCLCPP_INFO(rclcpp::get_logger("my_logger"), "value 0");
-
+node->finger_number = 0;
     }
 }
-
-RCLCPP_INFO(rclcpp::get_logger("my_logger"), "finish");
 
   rclcpp::shutdown();
   return 0;
