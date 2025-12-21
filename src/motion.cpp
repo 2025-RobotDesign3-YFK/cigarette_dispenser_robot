@@ -1,4 +1,5 @@
 // SPDX-FileCopyrightText: 2023 Keitaro Nakamura,Ryotaro karikomi
+// SPDX-FileCopyrightText: 2025 Hiroto Fujitake, Shogo Yamashita, Reoto Koya
 // SPDX-License-Identifier: Apache 2.0
 #include <cmath>
 
