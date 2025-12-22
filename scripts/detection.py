@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# SPDX-License-Identifier: NON-COMMERCIAL LICENSE
 
 import rclpy
 from rclpy.node import Node
