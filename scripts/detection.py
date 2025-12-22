@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
+import rclpy
+from rclpy.node import Node
+from rclpy.executors import SingleThreadedExecutor
+from std_msgs.msg import Int16
 import cv2
 import mediapipe as mp
 import math
 import sys
 from numpy.lib.type_check import imag
 
-import rclpy
-from rclpy.node import Node
-from rclpy.executors import SingleThreadedExecutor
-from std_msgs.msg import Int16
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -73,7 +72,7 @@ def main(args=None):
 
 
           #取得した座標より各指の手首との距離を計算
-          finger_thump  = int(math.sqrt((cx4-cx0)**2))
+          finger_thump  = int(math.sqrt((cx4-cx0)**2  + (cy4-cy0)**2) )
           finger_index  = int(math.sqrt((cx8-cx0)**2  + (cy8-cy0)**2) )
           finger_middle = int(math.sqrt((cx12-cx0)**2 + (cy12-cy0)**2))
           finger_ring   = int(math.sqrt((cx16-cx0)**2 + (cy16-cy0)**2))
