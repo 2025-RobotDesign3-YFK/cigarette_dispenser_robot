@@ -42,6 +42,7 @@ git clone https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot.git
  ```
 - **ros2_wsディレクトリ内でMediaPipeをインストール**
  ```bash
+ #ROS 2ディレクトリに移動
  cd ~/ros2_ws
 
  # pip自体のアップグレード（念のため）
@@ -55,11 +56,11 @@ git clone https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot.git
 
 ### Gazeboで実行する場合
 
-- **terminal 1:**
+- **terminal 1(ドライバ起動):**
  ```bash
  ros2 launch crane_x7_gazebo crane_x7_with_table.launch.py
  ```
-- **terminal 2:**
+- **terminal 2(アプリ起動):**
  ```bash
  ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py use_sim_time:='true'
  ```
@@ -70,11 +71,11 @@ git clone https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot.git
  ```bash
  sudo chmod 666 /dev/ttyUSB0
  ```
-- **terminal 1:**
+- **terminal 1(ドライバ起動):**
  ```bash
  ros2 launch crane_x7_examples demo.launch.py port_name:=/dev/ttyUSB0
  ```
-- **terminal 2:**
+- **terminal 2(アプリ起動):**
  ```bash
  ros2 launch cigarette_dispenser_robot detection_and_motion.launch.py
  ```
@@ -82,7 +83,7 @@ git clone https://github.com/2025-RobotDesign3-YFK/cigarette_dispenser_robot.git
 
 ## ライセンス
 - © 2025 Hiroto Fujitake, Shogo Yamashita, Reoto Koya
-- このパッケージは、CIT-Autonomous-Robot-Labの公開する[パッケージ](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples)の[src](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples/blob/main/src)のpick_and_move.cppの改変によって作成されています.
+- このパッケージは、CIT-Autonomous-Robot-Labの公開する[パッケージ](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples)の[src](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples/blob/main/src)のpick_and_move.cppと、[launch](https://github.com/CIT-Autonomous-Robot-Lab/crane_x7_simple_examples/blob/main/launch)のpick_and_move.launch.pyの改変によって作成されています.
 - このパッケージはApache License, Version 2.0に基づき公開されています.  
 - ライセンスの全文は[LICENSE](./LICENSE)から確認できます.  
 
